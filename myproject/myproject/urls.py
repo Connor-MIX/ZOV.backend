@@ -18,10 +18,13 @@ from django.contrib import admin
 from django.urls import path, include
 from drf_yasg.views import get_schema_view
 from drf_yasg import openapi
+from rest_framework_simplejwt.views import TokenObtainPairView, TokenRefreshView
+from social_auth.views import GitHubLogin
+from users.views import RegisterView, CustomTokenObtainPairView
 
 schema_view = get_schema_view(
     openapi.Info(
-        title="Статьи игр - API",
+        title="API - статьи игр",
         default_version="v1",
         description="API для управления статьями об играх",
     ),
@@ -33,6 +36,15 @@ urlpatterns = [
     path('games/', include('games.urls')),
 
     # Документация
-    path('swagger/', schema_view.with_ui('swagger', cache_timeout=0), name='schema-swagger-ui'),
-    path('redoc/', schema_view.with_ui('redoc', cache_timeout=0), name='schema-redoc'),
+    path('swagger/', schema_view.with_ui('swagger', cache_timeout=0)),
+    path('redoc/', schema_view.with_ui('redoc', cache_timeout=0)),
+
+    # JWT-токены
+    path('api/token/', TokenObtainPairView.as_view(), name='token-obtain-pair'),
+    path('api/token/refresh/', TokenRefreshView.as_view(), name='token-refresh'),
+
+    # Auth
+    path('api/auth/register/', RegisterView.as_view()),
+    path('api/auth/login/', CustomTokenObtainPairView.as_view()),
+    path('api/auth/github/', GitHubLogin.as_view()),
 ]
