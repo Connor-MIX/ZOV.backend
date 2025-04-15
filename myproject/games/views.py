@@ -3,14 +3,12 @@ from .models import Game
 from .serializers import GameSerializer
 
 # Create your views here.
-class GameListAPIView(generics.ListAPIView):
+class GameListCreateView(generics.ListCreateAPIView):
     queryset = Game.objects.all()
     serializer_class = GameSerializer
+    operation_id = 'game_list_create'
 
-class GameCreateAPIView(generics.CreateAPIView):
+class GameDetailView(generics.RetrieveUpdateDestroyAPIView):
     queryset = Game.objects.all()
     serializer_class = GameSerializer
-
-class GameDetailAPIView(generics.RetrieveUpdateDestroyAPIView):
-    queryset = Game.objects.all()
-    serializer_class = GameSerializer
+    operation_id = 'game_detail'
