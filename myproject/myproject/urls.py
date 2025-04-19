@@ -47,4 +47,5 @@ urlpatterns = [
     path('api/auth/register/', RegisterView.as_view()),
     path('api/auth/login/', CustomTokenObtainPairView.as_view()),
     path('api/auth/github/', GitHubLogin.as_view()),
+    path('accounts/', include('allauth.urls')),
 ]
