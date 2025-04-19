@@ -48,4 +48,5 @@ urlpatterns = [
     path('api/auth/login/', CustomTokenObtainPairView.as_view()),
     path('api/auth/github/', GitHubLogin.as_view()),
     path('accounts/', include('allauth.urls')),
+    path('accounts/github/login/callback/', GitHubLogin.as_view(), name='github_callback'),
 ]
